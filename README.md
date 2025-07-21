@@ -4,6 +4,10 @@ A Kubernetes deployment setup for a React application with Helm Chart support. T
 
 ---
 
+<p style={{width="700px" height="700px"}}>
+   <img src="Adobe Express - file.png" alt="diagrm"/>
+</p>
+
 ## Project Overview
 
 This project demonstrates how to deploy a **React application** containerized with Docker and managed through **Kubernetes** using a **Helm chart**. Helm simplifies managing Kubernetes manifests by templating configuration files and managing releases. This repo includes:
