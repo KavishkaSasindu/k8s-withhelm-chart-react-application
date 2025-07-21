@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}
+  labels:
+    app: {{ .Values.metadata.labels.app}}
+spec:
+  replicas: {{ .Values.resources.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.metadata.labels.app }}
+  template:
+    metadata:
+      name: {{ .Values.template.metadata.name }}
+      labels:
+        app: {{ .Values.metadata.labels.app }}
+    spec:
+      containers:
+        - name:  {{ .Values.template.containers.name }}
+          image:  {{ .Values.template.containers.image }}:{{ .Values.template.containers.tag }}
+          imagePullPolicy:  {{ .Values.template.containers.imagePullPolicy }}
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+          ports:
+            - containerPort: {{ .Values.template.containers.containerPort }}
+      imagePullSecrets:
+        - name: {{ .Values.template.containers.imagePullSecrets }}

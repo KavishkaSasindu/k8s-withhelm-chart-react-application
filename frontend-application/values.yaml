@@ -1,0 +1,59 @@
+# deployment
+metadata:
+  labels:
+    app: frontend-app 
+
+# resources
+resources:
+  replicas: 1
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    type: Resource
+    name: cpu
+    targetType: Utilization
+    averageUtilization: 50
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 200m
+    memory: 64Mi
+
+# pod 
+template:
+  metadata:
+    name: frontend-pod
+  containers:
+    name: frontend-containers
+    image: sasindu193/demo-react-app
+    tag: latest
+    containerPort: 80
+    imagePullPolicy: IfNotPresent
+    imagePullSecrets: docker-cred
+
+# hpa
+hpa:
+  metadata:
+    name: frontend-hpa
+    labels:
+      type: hpa
+
+# service
+service:
+  metadata:
+    name: frontend-service
+    labels:
+      type: frontend-svc
+  spec:
+    type: ClusterIP
+    ports:
+      port: 80
+      targetPort: 80
+
+#ingress
+ingress:
+  host: example.com
+  class: nginx
+  metadata:
+    name: frontend-ingress
